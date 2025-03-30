@@ -56,6 +56,7 @@ int main()
         printf("Unable to find a connected wireless network interface.\n");
         WlanFreeMemory(pIfList);
         WlanCloseHandle(hClient, NULL);
+        return 1;
     }
 
     // Info loop
@@ -68,8 +69,8 @@ int main()
     }
 
     // Cleanup
-        WlanFreeMemory(pIfList);
-        WlanCloseHandle(hClient, NULL);
+    WlanFreeMemory(pIfList);
+    WlanCloseHandle(hClient, NULL);
 
     return 0;
 }
