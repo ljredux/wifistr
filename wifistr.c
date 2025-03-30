@@ -29,10 +29,8 @@ PWLAN_CONNECTION_ATTRIBUTES get_connection_info(HANDLE hClient, const GUID *pInt
 
     if (dwResult != ERROR_SUCCESS)
     {
-        printf("WlanQueryInterface failed with error: %lu\n", dwResult);
         return NULL;
     }
-
     return pConnectInfo;
 }
 
