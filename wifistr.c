@@ -2,7 +2,6 @@
 #include <wlanapi.h>
 #include <stdio.h>
 #include <time.h>
-#include <unistd.h>
 
 char *get_current_time()
 {
@@ -87,7 +86,7 @@ int main()
         char *current_time = get_current_time();
         printf("\r%s x%% (SSID)\033[?25l", current_time); // \033[?25l hides the cursor
         fflush(stdout);
-        sleep(1);
+        Sleep(1000);
     }
 
     // Cleanup
