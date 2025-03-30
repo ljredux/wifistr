@@ -12,6 +12,30 @@ char *get_current_time()
     return buffer;
 }
 
+PWLAN_CONNECTION_ATTRIBUTES get_connection_info(HANDLE hClient, const GUID *pInterfaceGuid)
+{
+    PWLAN_CONNECTION_ATTRIBUTES pConnectInfo = NULL;
+    DWORD connectInfoSize = sizeof(WLAN_CONNECTION_ATTRIBUTES);
+    WLAN_OPCODE_VALUE_TYPE opCode = wlan_opcode_value_type_invalid;
+
+    DWORD dwResult = WlanQueryInterface(
+        hClient,
+        pInterfaceGuid,
+        wlan_intf_opcode_current_connection,
+        NULL,
+        &connectInfoSize,
+        (PVOID *)&pConnectInfo,
+        &opCode);
+
+    if (dwResult != ERROR_SUCCESS)
+    {
+        printf("WlanQueryInterface failed with error: %lu\n", dwResult);
+        return NULL;
+    }
+
+    return pConnectInfo;
+}
+
 int main()
 {
     // Opens a handle to the WLAN service
