@@ -83,9 +83,30 @@ int main()
     // Info loop
     while (1)
     {
-        char *current_time = get_current_time();
-        printf("\r%s x%% (SSID)\033[?25l", current_time); // \033[?25l hides the cursor
-        fflush(stdout);
+        PWLAN_CONNECTION_ATTRIBUTES pConnectInfo = get_connection_info(
+            hClient,
+            &pIfList->InterfaceInfo[connectedInterfaceIndex].InterfaceGuid
+        );
+
+        if (pConnectInfo) {
+            // Get time
+            char *current_time = get_current_time();
+            // Get signal quality
+            ULONG signalQuality = pConnectInfo->wlanAssociationAttributes.wlanSignalQuality;
+            // Get SSID (convert from DOT11_SSID to a readable string)
+            char ssidStr[DOT11_SSID_MAX_LENGTH + 1] = {0};
+            memcpy(ssidStr, pConnectInfo->wlanAssociationAttributes.dot11Ssid.ucSSID,
+                   pConnectInfo->wlanAssociationAttributes.dot11Ssid.uSSIDLength);
+
+            printf("\r%s %3lu%% (%s)\033[?25l", current_time, signalQuality, ssidStr); // \033[?25l hides the cursor
+            fflush(stdout);
+
+            WlanFreeMemory(pConnectInfo);
+        } else {
+            printf("\nLost connection to wireless network interface.\n\033[?25h"); // \033[?25h restores the cursor
+            break; 
+        }
+        
         Sleep(1000);
     }
 
