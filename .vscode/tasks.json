@@ -44,6 +44,43 @@
             }
         },
         {
+            "label": "build-32bit",
+            "type": "shell",
+            "command": "i686-w64-mingw32-gcc",
+            "args": [
+                "${workspaceFolder}/wifistr.c",
+                "-o",
+                "${workspaceFolder}/bin/x32/wifistr.exe",
+                "-lwlanapi"
+            ],
+            "problemMatcher": "$gcc",
+            "group": "build",
+            "presentation": {
+                "reveal": "always"
+            }
+        },
+        {
+            "label": "build-32bit-sizeopt",
+            "type": "shell",
+            "command": "i686-w64-mingw32-gcc",
+            "args": [
+                "${workspaceFolder}/wifistr.c",
+                "-o",
+                "${workspaceFolder}/bin/x32/wifistr.exe",
+                "-lwlanapi",
+                "-s",
+                "-O2",
+                "-ffunction-sections",
+                "-fdata-sections",
+                "\\\"-Wl,--gc-sections\\\""
+            ],
+            "problemMatcher": "$gcc",
+            "group": "build",
+            "presentation": {
+                "reveal": "always"
+            }
+        },
+        {
             "label": "Create Bin Folders",
             "type": "shell",
             "command": "pwsh",
