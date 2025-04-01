@@ -1,7 +1,22 @@
 #include <windows.h>
 #include <wlanapi.h>
+#include <signal.h>
 #include <stdio.h>
 #include <time.h>
+
+int show_cursor(int show) {
+    if (printf(show ? "\e[?25h" : "\e[?25l") < 0) {
+        return -1;
+    }
+    return fflush(stdout);
+}
+
+// Show cursor upon ctrl+c
+void handle_sigint(int sig) {
+    (void)sig;
+    show_cursor(1);
+    exit(0); 
+}
 
 char *get_current_time()
 {
@@ -35,6 +50,10 @@ PWLAN_CONNECTION_ATTRIBUTES get_connection_info(HANDLE hClient, const GUID *pInt
 
 int main()
 {
+    // Hide cursor, and restore it upon ctrl+c
+    show_cursor(0);
+    signal(SIGINT, handle_sigint);
+
     // Opens a handle to the WLAN service
     DWORD dwVersion = 0;
     DWORD dwResult = 0;
@@ -98,12 +117,12 @@ int main()
             memcpy(ssidStr, pConnectInfo->wlanAssociationAttributes.dot11Ssid.ucSSID,
                    pConnectInfo->wlanAssociationAttributes.dot11Ssid.uSSIDLength);
 
-            printf("\r%s %3lu%% (%s)\033[?25l", current_time, signalQuality, ssidStr); // \033[?25l hides the cursor
+            printf("\r%s %3lu%% (%s)", current_time, signalQuality, ssidStr);
             fflush(stdout);
 
             WlanFreeMemory(pConnectInfo);
         } else {
-            printf("\nLost connection to wireless network interface.\n\033[?25h"); // \033[?25h restores the cursor
+            printf("\nLost connection to wireless network interface.\n");
             break; 
         }
         
@@ -113,6 +132,8 @@ int main()
     // Cleanup
     WlanFreeMemory(pIfList);
     WlanCloseHandle(hClient, NULL);
+
+    show_cursor(1);
 
     return 0;
 }
