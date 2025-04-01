@@ -4,5 +4,13 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"files.associations": {
+			"windows.h": "c",
+			"wlanapi.h": "c",
+			"signal.h": "c",
+			"stdio.h": "c",
+			"time.h": "c"
+		}
+	}
 }
