@@ -6,12 +6,9 @@
         {
             "label": "build-64bit",
             "type": "shell",
-            "command": "gcc",
+            "command": "mingw32-make",
             "args": [
-                "${workspaceFolder}/wifistr.c",
-                "-o",
-                "${workspaceFolder}/bin/x64/wifistr.exe",
-                "-lwlanapi"
+                "--always-make"
             ],
             "problemMatcher": "$gcc",
             "group": {
@@ -23,19 +20,12 @@
             }
         },
         {
-            "label": "build-64bit-sizeopt",
+            "label": "build-64bit-opt",
             "type": "shell",
-            "command": "gcc",
+            "command": "mingw32-make",
             "args": [
-                "${workspaceFolder}/wifistr.c",
-                "-o",
-                "${workspaceFolder}/bin/x64/wifistr.exe",
-                "-lwlanapi",
-                "-s",
-                "-O2",
-                "-ffunction-sections",
-                "-fdata-sections",
-                "\\\"-Wl,--gc-sections\\\""
+                "--always-make",
+                "OPTIMISED=1"
             ],
             "problemMatcher": "$gcc",
             "group": "build",
@@ -46,12 +36,10 @@
         {
             "label": "build-32bit",
             "type": "shell",
-            "command": "i686-w64-mingw32-gcc",
+            "command": "mingw32-make",
             "args": [
-                "${workspaceFolder}/wifistr.c",
-                "-o",
-                "${workspaceFolder}/bin/x32/wifistr.exe",
-                "-lwlanapi"
+                "--always-make",
+                "ARCH=x32"
             ],
             "problemMatcher": "$gcc",
             "group": "build",
@@ -60,35 +48,16 @@
             }
         },
         {
-            "label": "build-32bit-sizeopt",
+            "label": "build-32bit-opt",
             "type": "shell",
-            "command": "i686-w64-mingw32-gcc",
+            "command": "mingw32-make",
             "args": [
-                "${workspaceFolder}/wifistr.c",
-                "-o",
-                "${workspaceFolder}/bin/x32/wifistr.exe",
-                "-lwlanapi",
-                "-s",
-                "-O2",
-                "-ffunction-sections",
-                "-fdata-sections",
-                "\\\"-Wl,--gc-sections\\\""
+                "--always-make",
+                "ARCH=x32",
+                "OPTIMISED=1"
             ],
             "problemMatcher": "$gcc",
             "group": "build",
-            "presentation": {
-                "reveal": "always"
-            }
-        },
-        {
-            "label": "Create Bin Folders",
-            "type": "shell",
-            "command": "pwsh",
-            "args": [
-                "-Command",
-                "\"'${workspaceFolder}/bin/x64', '${workspaceFolder}/bin/x32' | ForEach-Object { New-Item -ItemType Directory -Path $_ -Force }\""
-            ],
-            "problemMatcher": [],
             "presentation": {
                 "reveal": "always"
             }
