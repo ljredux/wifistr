@@ -26,7 +26,7 @@ WINDRES = $(MINGW_PATH)/windres
 
 # Compiler flags & libraries
 CFLAGS = -Wall -Wextra
-CFLAGS_OPT = -s -O2 -ffunction-sections -fdata-sections -Wl,--gc-sections
+CFLAGS_OPT = -s -O2 -fno-asynchronous-unwind-tables -ffunction-sections -fdata-sections -Wl,--gc-sections
 LIBS = -lwlanapi
 
 # Source files
