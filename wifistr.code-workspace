@@ -11,9 +11,10 @@
 			"signal.h": "c",
 			"stdio.h": "c",
 			"time.h": "c"
+		},
+		"[makefile]": {
+			"editor.insertSpaces": false,
+			"editor.detectIndentation": false
 		}
-	},
-	"[makefile]": {
-        "editor.insertSpaces": false
-    }
+	}
 }
