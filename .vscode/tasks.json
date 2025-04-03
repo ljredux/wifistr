@@ -16,7 +16,7 @@
                 "isDefault": true
             },
             "presentation": {
-                "reveal": "always"
+                "reveal": "silent"
             }
         },
         {
@@ -30,7 +30,7 @@
             "problemMatcher": "$gcc",
             "group": "build",
             "presentation": {
-                "reveal": "always"
+                "reveal": "silent"
             }
         },
         {
@@ -44,7 +44,7 @@
             "problemMatcher": "$gcc",
             "group": "build",
             "presentation": {
-                "reveal": "always"
+                "reveal": "silent"
             }
         },
         {
@@ -59,7 +59,7 @@
             "problemMatcher": "$gcc",
             "group": "build",
             "presentation": {
-                "reveal": "always"
+                "reveal": "silent"
             }
         }
     ]
