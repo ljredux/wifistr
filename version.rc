@@ -22,7 +22,6 @@ BEGIN
             VALUE "OriginalFilename",   "wifistr.exe"
             VALUE "ProductName",        "wifistr"
             VALUE "ProductVersion",     VER_VERSION_STR
-            VALUE "OriginalFilename",   "wifistr.exe"
         END
     END
     BLOCK "VarFileInfo"
