@@ -28,8 +28,8 @@ A Windows console application that continuously displays the signal strength of 
     ```powershell
     gcc wifistr.c -o wifistr.exe -lwlanapi -s -O2 -fno-asynchronous-unwind-tables -ffunction-sections -fdata-sections "-Wl,--gc-sections"
     ```
-    
-Alternatively you can use the Makefile, but your MinGW installation paths (32bit and 64bit) must be defined at the top.
+
+If you prefer, you can use the provided Makefile—just make sure your MinGW paths (32bit/64bit) are defined at the top.
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
