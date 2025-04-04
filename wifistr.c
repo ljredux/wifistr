@@ -4,18 +4,21 @@
 #include <stdio.h>
 #include <time.h>
 
-int show_cursor(int show) {
-    if (printf(show ? "\e[?25h" : "\e[?25l") < 0) {
+int show_cursor(int show)
+{
+    if (printf(show ? "\e[?25h" : "\e[?25l") < 0)
+    {
         return -1;
     }
     return fflush(stdout);
 }
 
 // Show cursor upon ctrl+c
-void handle_sigint(int sig) {
+void handle_sigint(int sig)
+{
     (void)sig;
     show_cursor(1);
-    exit(0); 
+    exit(0);
 }
 
 char *get_current_time()
@@ -104,10 +107,22 @@ int main()
     {
         PWLAN_CONNECTION_ATTRIBUTES pConnectInfo = get_connection_info(
             hClient,
-            &pIfList->InterfaceInfo[connectedInterfaceIndex].InterfaceGuid
-        );
+            &pIfList->InterfaceInfo[connectedInterfaceIndex].InterfaceGuid);
 
-        if (pConnectInfo) {
+        if (pConnectInfo)
+        {
+            // Convert interface description to multi-byte string
+            char interfaceDesc[256] = {0};
+            WideCharToMultiByte(CP_UTF8, 0,
+                                pIfList->InterfaceInfo[connectedInterfaceIndex].strInterfaceDescription,
+                                -1, interfaceDesc, sizeof(interfaceDesc), NULL, NULL);
+            // Print interface only once
+            static int printed_interface = 0;
+            if (printed_interface == 0)
+            {
+                printf("Interface: %s\n", interfaceDesc);
+                printed_interface = 1;
+            }
             // Get time
             char *current_time = get_current_time();
             // Get signal quality
@@ -121,11 +136,13 @@ int main()
             fflush(stdout);
 
             WlanFreeMemory(pConnectInfo);
-        } else {
-            printf("\nLost connection to wireless network interface.\n");
-            break; 
         }
-        
+        else
+        {
+            printf("\nLost connection to wireless network interface.\n");
+            break;
+        }
+
         Sleep(1000);
     }
 
